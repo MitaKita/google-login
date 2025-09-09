@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import React from "react";
+import Login from "@/components/auth/login";
+import { ProviderBase } from "@/components/provider-base/ProviderBase";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,10 +27,24 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <ProviderBase>
+          <header className="p-4 border-b border-b-zinc-200 flex justify-between items-center">
+            <h1 className="text-2xl font-bold">Next.js + Google OAuth</h1>
+            <Login />
+          </header>
+          <main className="p-4">{children}</main>
+          <footer className="p-4 border-t border-t-zinc-200 text-center">
+            <p className="text-sm text-zinc-500">
+              &copy; {new Date().getFullYear()} My Next.js App
+            </p>
+          </footer>
+        </ProviderBase>
       </body>
     </html>
   );
