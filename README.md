@@ -1,5 +1,7 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+The app is deployed at [https://google-login-omega-eosin.vercel.app/](https://google-login-omega-eosin.vercel.app/)
+
 ## Getting Started
 
 First, run the development server:
