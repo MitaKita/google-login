@@ -1,26 +1,32 @@
 'use client';
 import React from "react";
-import { GoogleLogin } from "@react-oauth/google";
+import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "@/store";
 import { setLoggedIn } from "@/store/slices/authSlice";
+import { prepareLogin } from "@/api/api";
 
 const Login = () => {
   const isLoggedIn = useSelector((state: RootState) => state.auth.loggedIn);
   const dispatch = useDispatch();
 
+  const onSuccess = (credentialResponse: CredentialResponse) => {
+    dispatch(setLoggedIn(true));
+    prepareLogin(credentialResponse.credential)
+          .then((resp) => console.log('response', resp))
+          .catch((err) => console.error(err));
+  }
+
+  const onError = () => {
+    console.error("Login Failed:");
+  }
+
   return (
     <div>
       {!isLoggedIn && (
         <GoogleLogin
-          onSuccess={credentialResponse => {
-            // You can send credentialResponse.credential to your backend for verification
-            console.log("Login Success", credentialResponse);
-            dispatch(setLoggedIn(true));
-          }}
-          onError={() => {
-            console.error("Login Failed");
-          }}
+          onSuccess={onSuccess}
+          onError={onError}
           useOneTap
         />
       )}
